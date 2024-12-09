@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,
+                initial-scale=1.0">
+
+    <title>Bootstrap Basic Example</title>
+
+    <link rel="stylesheet" href="style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="script.js"></script>
+</head>
+
+<body>
+    <div>
+        <form action="success.html" method="post" id="signup">
+            <label for="fname">Enter your name:</label><br>
+            <input type="text" id="fname" name="fname"><br>
+            <label for="age">Enter your age:</label><br>
+            <input type="text" id="age" name="age"><br>
+            <button type="submit">Submit</button><br>
+        </form>
+        <h2 id="greetings">Greetings administrator</h2>
+    </div>
+    <div>
+        <form id="changeTextForm">
+            <label for="changeTextField">Enter your text to replace the paragraph:</label><br>
+            <input type="text" id="changeTextField" name="changeTextField"><br>
+            <button type="button" id="changeTextButton">Change</button><br>
+        </form>
+        <h3>Paragraph you can change:</h3>
+        <p id="paragraphToReplace">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam nec luctus velit. Nunc eleifend metus pulvinar
+            magna venenatis, vel tincidunt lectus mattis. In in dui sit amet est fringilla gravida. Vivamus mattis
+            interdum mi ac luctus. Morbi pretium quam id dolor vehicula placerat. Fusce malesuada neque nec nisl ultricies,
+            quis vulputate nulla porta. Vestibulum vitae massa eget justo rhoncus fermentum non at risus. Pellentesque
+            ultricies leo lorem, feugiat volutpat risus vulputate ac. Quisque tincidunt, elit at hendrerit facilisis,
+            erat dui vulputate nisl, vitae ornare ipsum mi venenatis arcu. Donec hendrerit quis metus vel egestas.
+            Vestibulum ultrices erat at leo euismod laoreet. Duis consectetur nisi nec feugiat sagittis. Nunc congue luctus
+            enim, sit amet scelerisque sapien facilisis vel.
+        </p>
+    </div>
+    <div class="changeableStyle" id="changeStyleDiv">
+        <form id="changeStyleForm">
+            <label for="changeStyleButton">Click button to change color</label><br>
+            <button type="button" id="changeStyleButton">Change</button><br>
+        </form>
+    </div>
+    <div>
+        <form id="removeParagraphForm">
+            <label for="removeParagraphField">Enter your text to replace the paragraph:</label><br>
+            <input type="text" id="removeParagraphField" name="removeParagraphField"><br>
+            <button type="button" id="removeParagraphButton">Change</button><br>
+        </form>
+        <div id="removeParagraphDiv">
+            <p>Paragraph 1</p>
+            <p>Paragraph 2</p>
+            <p>Paragraph 3</p>
+            <p>Paragraph 4</p>
+            <p>Paragraph 5</p>
+            <p>Paragraph 6</p>
+        </div>
+    </div>
+</body>
+
+</html>
