@@ -3,30 +3,47 @@ function validatePositiveNumber(input) {
     return Number.isInteger(num) && num > 0
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-    const form = document.querySelector("form")
-    const nameInput = document.getElementById("fname")
-    const ageInput = document.getElementById("age")
-
-    form.addEventListener("submit", (event) => {
-        const ageValue = ageInput.value;
-        const nameValue = nameInput.value
-
-        // 1.a.
-        if (nameValue.length === 0) {
-            event.preventDefault()
-            alert("Name can not be empty")
-            nameInput.focus()
+function postItem(name, age) {
+    fetch("https://jsonblob.com/api/jsonBlob", {
+        method: "POST",
+        body: JSON.stringify({
+            name: name,
+            age: age
+        }),
+        headers: {
+            "Content-type": "application/json; charset=UTF-8"
         }
+    })
+        .then(response => {
+            if (response.ok) {
+                let location = response.headers.get("Location");
+                console.log("Blob successfully created at:", location);
+            } else {
+                console.error("Failed to create the blob. Status:", response.status);
+            }
+        })
+        .catch(error => console.error("Error during fetch:", error));
+}
 
-        // 1.b.
-        if (!validatePositiveNumber(ageValue)) {
-            event.preventDefault()
-            alert("Enter a valid positive integer for age")
-            ageInput.focus()
+async function getItem(id) {
+    try {
+        let response = await fetch(`https://jsonblob.com/api/jsonBlob/${id}`, {
+            method: "GET"
+        });
+
+        if (response.ok) {
+            let res = await response.json();
+            console.log("Successfully fetched blob: ", res)
+            return res
+        } else {
+            console.error("Failed to get the blob. Status:", response.status);
+            return null;
         }
-    });
-});
+    } catch (error) {
+        console.error("Error during fetch:", error);
+        return null;
+    }
+}
 
 $(document).ready(function () {
     // 2
@@ -50,14 +67,46 @@ $(document).ready(function () {
     $("#removeParagraphButton").click(function () {
         let num = Number($("#removeParagraphField").val())
         if (Number.isInteger(num) && num > 0 && num <= 6) {
-            // TODO: Kazkodel nedeletina paragrafu
-            $("#removeParagraphDiv > p").each(function () {
-                if (this.value.includes($("#removeParagraphField").val())) {
-                    $(this).remove()
-                }
-            })
+            $(`#removeParagraphDiv > p:nth-child(${num})`).remove()
         } else {
             alert("Enter a valid paragraph number")
+        }
+    })
+    // 3.d.
+    $("#addParagraphButton").click(function () {
+        let inputText = $("#addParagraphField").val()
+        let par = $("<p></p>").text(inputText)
+        $("#addParagraph").append(par)
+    })
+    // 4.a.
+    $("#submitApiButton").click(function () {
+        let name = $("#fname").val()
+        let age = $("#age").val()
+        // 1.a.
+        if (name.length === 0) {
+            alert("Name can not be empty")
+            return
+        }
+
+        // 1.b.
+        if (!validatePositiveNumber(age)) {
+            alert("Enter a valid positive integer for age")
+            return
+        }
+        postItem(name, age)
+    })
+    // 4.b. ir 4.c.
+    $("#getApiButton").click(async function () {
+        let blobId = $("#getIdField").val()
+        try {
+            let json = await getItem(blobId);
+            if (json) {
+                $("#getItemTable tr:last").after(`<tr><td>${json.name}</td><td>${json.age}</td></tr>`);
+            } else {
+                console.error("Failed to fetch data or invalid response.");
+            }
+        } catch (error) {
+            console.error("Error fetching data:", error);
         }
     })
 })
